@@ -1,0 +1,25 @@
+
+
+<div class="container">
+<div class="row">
+<div class="col-md-8">
+<h2>Followers</h2>
+
+
+<%= for follower <- @followers do %>
+<div class="col-md-8">
+<div class="card" style="width: 24rem;">
+  <div class="card-body">
+    <h4 class="card-title"><%= follower.email_me %></h4>
+    <span><%= link "Delete", to: follower_path(@conn, :delete, follower), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+  </div>
+</div>
+</div>
+
+
+<% end %>
+
+
+
+</div>
+</div

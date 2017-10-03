@@ -1,0 +1,22 @@
+<div class="container">
+<div class="row">
+<div class="col-md-8">
+
+<h2>Users</h2>
+<h4>
+<span><%= link "Sign up", to: user_path(@conn, :new) %></span></h4>
+
+<%= for user <- @users do %>
+
+<div class="card" style="width: 24rem;">
+  <div class="card-body">
+    <h4 class="card-title"><%= user.name %></h4>
+    <p class="card-text">@<%= user.handle %></p>
+    <p class="card-text"><%= user.email %></p>
+    <p class="card-text"><%= user.bio %></p>
+    <span><%= link "Show", to: user_path(@conn, :show, user), class: "btn btn-default btn-xs" %></span>
+</div>
+</div>
+
+
+<% end %>

@@ -1,0 +1,52 @@
+<div class="container">
+<div class="row">
+<div class="col-md-4">
+  <h2><%= @user.name %></h2>
+  <h3>@<%= @user.handle %></h3>
+  <h3><%= @user.email %></h3>
+  <p><%= @user.bio %></p>
+  <%= form_for @follower, follower_path(@conn, :create), [class: "form-inline"], fn f -> %>
+
+      <%= if @following.action do %>
+        <div class="alert alert-danger">
+          <p>Oops, something went wrong! Please check the errors below.</p>
+        </div>
+      <% end %>
+
+
+      <%= hidden_input :follower, :email_me, value: @current_user.email %>
+      <%= hidden_input :follower, :email_owner, value: @user.email %>
+      <%= hidden_input :follower, :user_id, value: @user.id %>
+
+
+    <div class="form-group">
+      <%= submit "Follow", class: "btn btn-primary" %>
+    </div>
+
+  <% end %>
+
+  </div>
+  </div>
+  <%= if @current_user.handle == @user.handle do %>
+  <span><%= link "Edit", to: user_path(@conn, :edit, @user) %></span>
+  <% end %>
+  <span><%= link "Back", to: user_path(@conn, :index) %></span>
+</div>
+
+<%= for post <- @user.posts do %>
+<div class="row">
+<div class="col-md-4"></div>
+<div class="col-md-8">
+  <div class="card" style="width: 24rem;">
+    <div class="card-body">
+      <h4 class="card-title"><%= post.inserted_at %></h4>
+      <p class="card-text"><%= post.message %></p>
+      <span><%= link "Show", to: post_path(@conn, :show, post), class: "btn btn-primary" %></span>
+      <%= if @current_user.handle == @user.handle do %>
+      <span><%= link "Delete", to: post_path(@conn, :delete, post), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger" %></span>
+      <% end %>
+    </div>
+  </div>
+  </div>
+</div>
+<% end %>

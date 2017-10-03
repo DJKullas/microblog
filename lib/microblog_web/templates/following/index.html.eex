@@ -1,0 +1,27 @@
+
+
+<div class="container">
+<h2>Following</h2>
+
+<div class="row">
+<div class="col-md-8">
+<%= for user <- @users do %>
+    <%= for follower <- user.followers do %>
+    <%= if follower.email_me == @current_user.email do %>
+    <div class="card" style="width: 24rem;">
+      <div class="card-body">
+        <h4 class="card-title"><%= follower.email_owner %></h4>
+        <span><%= link "Delete", to: follower_path(@conn, :delete, follower), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+      </div>
+      </div
+
+    </div>
+    <% end %>
+    <% end %>
+<% end %>
+  </tbody>
+
+
+</div>
+</div>
+</div>

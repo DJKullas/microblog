@@ -1,0 +1,22 @@
+<h2>Show Follower</h2>
+
+<ul>
+
+  <li>
+    <strong>Email me:</strong>
+    <%= @follower.email_me %>
+  </li>
+
+  <li>
+    <strong>Email owner:</strong>
+    <%= @follower.email_owner %>
+  </li>
+
+</ul>
+
+
+
+
+
+<span><%= link "Edit", to: follower_path(@conn, :edit, @follower) %></span>
+<span><%= link "Back", to: follower_path(@conn, :index) %></span>

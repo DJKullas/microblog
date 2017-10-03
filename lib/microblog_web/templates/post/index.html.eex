@@ -1,30 +1,45 @@
-<h2>Listing Posts</h2>
+<div class="container">
+<h2>Posts</h2>
+  <%= if @logged_in do %>
+  <%= for user <- @users do %>
+      <%= for follower <- user.followers do %>
+      <%= if follower.email_me == @current_user.email do %>
+      <%= for post <- @posts do %>
+      <%= if post.user.email == follower.email_owner do %>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>User</th>
-      <th>Time</th>
-      <th>Message</th>
+      <div class="row">
+      <div class="col-md-8">
+        <div class="card" style="width: 24rem;">
+          <div class="card-body">
+            <h4 class="card-title"><%= post.user.name %></h4>
+            <p class="card-text">@<%= post.user.handle %></p>
+            <p class="card-text"><%= post.message %></p>
+              </div>
+          <span><%= link "Show", to: post_path(@conn, :show, post), class: "btn btn-default btn-xs" %></span>
 
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-<%= for post <- @posts do %>
-    <tr>
-      <td><%= post.user %></td>
-      <td><%= post.time %></td>
-      <td><%= post.message %></td>
+        </div>
+        </div>
+    </div>
 
-      <td class="text-right">
-        <span><%= link "Show", to: post_path(@conn, :show, post), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Edit", to: post_path(@conn, :edit, post), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Delete", to: post_path(@conn, :delete, post), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
-      </td>
-    </tr>
+
+    <% end %>
+    <% end %>
+    <% end %>
 <% end %>
-  </tbody>
-</table>
-
-<span><%= link "New Post", to: post_path(@conn, :new) %></span>
+<% end %>
+<% else %>
+<%= for post <- @posts do %>
+<div class="row">
+<div class="col-md-8">
+<div class="card" style="width: 24rem;">
+  <div class="card-body">
+    <h4 class="card-title">@<%= post.user.handle %></h4>
+    <p class="card-text"><%= post.message %></p>
+    <span><%= link "Show", to: post_path(@conn, :show, post), class: "btn btn-primary" %></span>
+    </div>
+</div>
+</div>
+</div>
+<% end %>
+<% end %>
+</div>
