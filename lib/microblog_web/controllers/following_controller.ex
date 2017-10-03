@@ -7,11 +7,10 @@ defmodule MicroblogWeb.FollowingController do
   def index(conn, _params) do
   if get_session(conn, :user_id) do
   current_user = Blog.get_user!(get_session(conn, :user_id))
-    following = Blog.list_following()
 
     users = Microblog.Repo.all(Blog.User)
     users = Microblog.Repo.preload(users, :followers)
-    render(conn, "index.html", following: following, current_user: current_user, users: users)
+    render(conn, "index.html", current_user: current_user, users: users)
     else
     conn
     |> put_flash(:info, "Must login for this page.")

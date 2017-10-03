@@ -1,6 +1,5 @@
 github: https://github.com/djkullas/microblog
 microblog url: http://microblog.kullasdj.com
-microblog resource url: http://microblog.kullasdj.com/posts
 
 Login:
 
@@ -8,7 +7,7 @@ My microblog allows the user little functionality without logging in. All
 you can do is look at the posts of every user and the users themselves. Logging in
 allows the user to follow other and post messages. The logged in user can only
 edit and delete their own information and posts. Logging out returns the user
-to the previous state before being logged in.
+to the previous state before being logged in. You login by using the user's email.
 
 Post:
 
