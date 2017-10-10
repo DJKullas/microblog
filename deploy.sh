@@ -23,6 +23,6 @@ $DIR/bin/microblog stop || true
 mix ecto.migrate
 
 SRC=`pwd`
-(cd $DIR && tar xzvf $SRC/_build/prod/rel/microblog/releases/0.0.1/nu_mart.tar.gz)
+(cd $DIR && tar xzvf $SRC/_build/prod/rel/microblog/releases/0.0.1/microblog.tar.gz)
 
 $DIR/bin/microblog start
