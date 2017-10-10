@@ -26746,6 +26746,12 @@ var handlebars = require("handlebars"); // Brunch automatically concatenates all
 
 
 $(function () {
+
+  if (!$("#likes-template").length > 0) {
+    // Wrong page.
+    return;
+  }
+
   var tt = $($("#likes-template")[0]);
   var code = tt.html();
   var tmpl = handlebars.compile(code);

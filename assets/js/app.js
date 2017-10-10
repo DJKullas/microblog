@@ -24,6 +24,13 @@ import "phoenix_html";
 let handlebars = require("handlebars");
 
 $(function() {
+
+  if (!$("#likes-template").length > 0) {
+    // Wrong page.
+    return;
+}
+
+
   let tt = $($("#likes-template")[0]);
     let code = tt.html();
     let tmpl = handlebars.compile(code);
