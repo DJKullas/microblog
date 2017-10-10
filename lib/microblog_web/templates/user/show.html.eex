@@ -19,9 +19,11 @@
       <%= hidden_input :follower, :user_id, value: @user.id %>
 
 
+      <%= if @already_follow < 1 do %>
     <div class="form-group">
       <%= submit "Follow", class: "btn btn-primary" %>
     </div>
+    <% end %>
 
   <% end %>
 

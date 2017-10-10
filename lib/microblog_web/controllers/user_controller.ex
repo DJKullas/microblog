@@ -36,10 +36,12 @@ defmodule MicroblogWeb.UserController do
       user_id: id,
 }
 follower = Blog.change_follower(follower)
+list_already_follow = Blog.already_follow(Blog.get_user!(get_session(conn, :user_id)).email, user.email)
+already_follow = Enum.count(list_already_follow)
 
 current_user = Blog.get_user!(get_session(conn, :user_id))
 
-    render(conn, "show.html", user: user, follower: follower, current_user: current_user)
+    render(conn, "show.html", user: user, follower: follower, current_user: current_user, already_follow: already_follow)
     else
     conn
     |> put_flash(:info, "Must be logged in to view a user.")

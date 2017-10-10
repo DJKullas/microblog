@@ -12,6 +12,28 @@
         <div class="card-body">
           <h4 class="card-title"><%= @post.inserted_at %></h4>
           <p class="card-text"><%= @post.message %></p>
+          <div id="post-likes"
+            data-path="<%= like_path(@conn, :index) %>"
+            data-post_id="<%= @post.id %>">
+            </div>
+
+          <script id="likes-template" type="text/x-handlebars-template">
+
+            <div class="m-2">
+
+            <p>Likes: {{data.length}}</p>
+
+            </div>
+
+            </script>
+
+            <%= if @liked < 1 do %>
+            <button id="add-like-button" class="btn btn-primary">
+            Like</button>
+            <% end %>
+
+
+
           <%= if @user.handle == @current_user.handle do %>
           <span><%= link "Edit", to: post_path(@conn, :edit, @post), class: "btn btn-primary" %></span>
           <% end %>

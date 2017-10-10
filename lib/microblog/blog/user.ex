@@ -14,6 +14,7 @@ defmodule Microblog.Blog.User do
     has_many :followers, Microblog.Blog.Follower
     has_many :following, Microblog.Blog.Following
     has_many :posts, Microblog.Blog.Post
+    has_many :likes, Microblog.Blog.Like
 
 
 

@@ -7,6 +7,7 @@ defmodule Microblog.Blog.Post do
   schema "posts" do
     field :message, :string
     belongs_to :user, Microblog.Blog.User
+    has_many :likes, Microblog.Blog.Like
 
     timestamps()
   end

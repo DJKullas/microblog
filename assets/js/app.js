@@ -11,7 +11,7 @@
 //
 // If you no longer want to use a dependency, remember
 // to also remove its path from "config.paths.watched".
-import "phoenix_html"
+import "phoenix_html";
 
 // Import local files
 //
@@ -19,3 +19,56 @@ import "phoenix_html"
 // paths "./socket" or full ones "web/static/js/socket".
 
 // import socket from "./socket"
+
+
+let handlebars = require("handlebars");
+
+$(function() {
+  let tt = $($("#likes-template")[0]);
+    let code = tt.html();
+    let tmpl = handlebars.compile(code);
+
+    let dd = $($("#post-likes")[0]);
+    let path = dd.data('path');
+    let p_id = dd.data('post_id');
+    let u_id = dd.data('current_user_id');
+
+    let bb = $($("#add-like-button")[0]);
+
+
+    function fetch_likes() {
+      function got_likes(data) {
+        console.log("DATASTART" + data + "DATAEND");
+        let html = tmpl(data);
+        dd.html(html);
+      }
+
+      $.ajax({
+        url: path,
+        data: {post_id: p_id},
+        contentType: "application/json",
+        dataType: "json",
+        method: "GET",
+        success: got_likes,
+      });
+    }
+
+    function add_like() {
+      let data = {like: {number: 1, post_id: p_id, current_user_id: u_id}}
+      bb.prop("disabled", true);
+
+    $.ajax({
+        url: path,
+        data: JSON.stringify(data),
+        contentType: "application/json",
+        dataType: "json",
+        method: "POST",
+        success: fetch_likes,
+      });
+    }
+
+    bb.click(add_like);
+
+
+    fetch_likes();
+});

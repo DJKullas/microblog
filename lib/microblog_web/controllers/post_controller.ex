@@ -63,9 +63,15 @@ defmodule MicroblogWeb.PostController do
   def show(conn, %{"id" => id}) do
     if get_session(conn, :user_id) do
     current_user = Blog.get_user!(get_session(conn, :user_id))
+
     post = Blog.get_post!(id)
     user = Blog.get_user!(post.user_id)
-    render(conn, "show.html", post: post, user: user, current_user: current_user)
+    post = Microblog.Repo.preload(post, :likes)
+    user_id = :user_id
+    already_liked = Blog.already_liked(current_user.id, id)
+    liked = Enum.count(already_liked)
+
+    render(conn, "show.html", post: post, user: user, current_user: current_user, liked: liked)
     else
     conn
     |> put_flash(:info, "Login to view posts.")
