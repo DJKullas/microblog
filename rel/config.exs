@@ -30,13 +30,13 @@ environment :dev do
   # dev mode.
   set dev_mode: true
   set include_erts: false
-  set cookie: :"lIneq[axk4a%uXIZWbk8$E6c!T$/kCl|5Si[EPb`Md1pJo|6*;y2tda2!o}73dpH"
+  set cookie: :"`_BE!]pnD{]qy@larN%*LP7x0kS]_)*Y<;rUWL$YDrPV<>i8H?YjKE8?y,hwfmZB"
 end
 
 environment :prod do
   set include_erts: true
   set include_src: false
-  set cookie: :"LIAOJ1xiqF1I$jU2*Co$W>v@%mgMD}`jo46b=%&1wt>.}c>|_U=ya:fyWC!{6H~m"
+  set cookie: :"p`hDBJ,W/(vX)KCRN?qI(>e^!ZH7BZ8Dii93`<`U:AqEC&eVP|*^zrA6ualO93CA"
 end
 
 # You may define one or more releases in this file.
@@ -49,7 +49,5 @@ release :microblog do
   set applications: [
     :runtime_tools
   ]
-  set commands: [
-    "migrate": "rel/commands/migrate.sh"
-  ]
 end
+
