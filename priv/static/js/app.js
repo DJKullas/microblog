@@ -26775,8 +26775,10 @@ $(function () {
   }
 
   function add_like() {
-    var data = { like: { number: 1, post_id: p_id, current_user_id: u_id } };
+    var data = { like: { number: 1, post_id: p_id, user_id: u_id } };
     bb.prop("disabled", true);
+
+    console.log(u_id);
 
     $.ajax({
       url: path,
