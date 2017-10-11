@@ -22,3 +22,17 @@ adds them to your following page so you can keep track of the users you are foll
 You can remove them from this list at any time. When you follow a user, you will
 now show up on their followers page, and they can remove you at any time. You cannot
 remove users from another user's followers or following list.
+
+Likes:
+
+Likes are visible for each post when you go to the post show.html page. It shows the
+number of likes for that post. Users can only like a post one time. If the current user
+has already liked the post, the like button is not displayed. If the current user
+likes the post, the like button becomes disabled and the like count goes up by one.
+Users are able to like their own posts.
+
+Deploy Script:
+
+The deploy script is run on the server. It is run by going to the checked out git
+repo and typing "./deploy.sh <PATH TO DEPLOY TO>". It unzips the build file to
+the directory specified and starts the phoenix app.
