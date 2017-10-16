@@ -26722,15 +26722,13 @@ require.register("js/app.js", function(exports, require, module) {
 
 require("phoenix_html");
 
-// Import local files
-//
-// Local files can be imported directly using relative
-// paths "./socket" or full ones "web/static/js/socket".
+var _socket = require("./socket");
 
-// import socket from "./socket"
+var _socket2 = _interopRequireDefault(_socket);
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var handlebars = require("handlebars"); // Brunch automatically concatenates all files in your
+// Brunch automatically concatenates all files in your
 // watched paths. Those paths can be configured at
 // config.paths.watched in "brunch-config.js".
 //
@@ -26743,7 +26741,12 @@ var handlebars = require("handlebars"); // Brunch automatically concatenates all
 //
 // If you no longer want to use a dependency, remember
 // to also remove its path from "config.paths.watched".
+var handlebars = require("handlebars");
 
+// Import local files
+//
+// Local files can be imported directly using relative
+// paths "./socket" or full ones "web/static/js/socket".
 
 $(function () {
 
@@ -26866,7 +26869,48 @@ var socket = new _phoenix.Socket("/socket", { params: { token: window.userToken 
 socket.connect();
 
 // Now that you are connected, you can join channels with a topic:
-var channel = socket.channel("topic:subtopic", {});
+var channel = socket.channel("updates:all", {});
+
+var postInput = document.querySelector("#post-input");
+var postsContainer = document.querySelector("#posts");
+var currentUserName = document.querySelector("#current-user-name");
+var currentUserHandle = document.querySelector("#current-user-handle");
+var currentMessageText = document.querySelector("#messageText");
+
+postInput.addEventListener("submit", function (e) {
+  channel.push("new_post", { fullName: currentUserName.textContent, handle: currentUserHandle.textContent, messageText: currentMessageText.value });
+  postInput.user_id = "";
+});
+
+channel.on("new_post", function (payload) {
+  console.log("on");
+  var postItem = document.createElement("div");
+  postItem.setAttribute("class", "row");
+  var columnDiv = document.createElement("div");
+  columnDiv.setAttribute("class", "col-md-8");
+  var cardDiv = document.createElement("div");
+  cardDiv.setAttribute("class", "card");
+  cardDiv.setAttribute("style", "width: 24rem;");
+  var cardBody = document.createElement("div");
+  cardBody.setAttribute("class", "card-body");
+  var title = document.createElement("h4");
+  title.setAttribute("class", "card-title");
+  title.innerHTML = "" + payload.fullName;
+  var handleDiv = document.createElement("p");
+  handleDiv.setAttribute("class", "card-text");
+  handleDiv.innerHTML = "@" + payload.handle;
+  var messageDiv = document.createElement("p");
+  messageDiv.innerHTML = "" + payload.messageText;
+  cardBody.appendChild(title);
+  cardBody.appendChild(handleDiv);
+  cardBody.appendChild(messageDiv);
+  cardDiv.appendChild(cardBody);
+  columnDiv.appendChild(cardDiv);
+  postItem.appendChild(columnDiv);
+
+  postsContainer.appendChild(postItem);
+});
+
 channel.join().receive("ok", function (resp) {
   console.log("Joined successfully", resp);
 }).receive("error", function (resp) {

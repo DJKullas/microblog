@@ -54,7 +54,49 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 socket.connect()
 
 // Now that you are connected, you can join channels with a topic:
-let channel = socket.channel("topic:subtopic", {})
+let channel = socket.channel("updates:all", {})
+
+let postInput         = document.querySelector("#post-input")
+let postsContainer = document.querySelector("#posts")
+let currentUserName = document.querySelector("#current-user-name")
+let currentUserHandle = document.querySelector("#current-user-handle")
+let currentMessageText = document.querySelector("#messageText")
+
+postInput.addEventListener("submit", function(e){
+  channel.push("new_post", {fullName: currentUserName.textContent, handle: currentUserHandle.textContent, messageText: currentMessageText.value})
+  postInput.user_id = ""
+});
+
+channel.on("new_post", payload => {
+  console.log("on")
+  let postItem = document.createElement("div")
+  postItem.setAttribute("class", "row")
+  let columnDiv = document.createElement("div")
+  columnDiv.setAttribute("class", "col-md-8")
+  let cardDiv = document.createElement("div")
+  cardDiv.setAttribute("class", "card")
+  cardDiv.setAttribute("style", "width: 24rem;")
+  let cardBody = document.createElement("div")
+  cardBody.setAttribute("class", "card-body")
+  let title = document.createElement("h4")
+  title.setAttribute("class", "card-title")
+  title.innerHTML = `${payload.fullName}`
+  let handleDiv = document.createElement("p")
+  handleDiv.setAttribute("class", "card-text")
+  handleDiv.innerHTML = `@${payload.handle}`
+  let messageDiv = document.createElement("p")
+  messageDiv.innerHTML = `${payload.messageText}`
+  cardBody.appendChild(title)
+  cardBody.appendChild(handleDiv)
+  cardBody.appendChild(messageDiv)
+  cardDiv.appendChild(cardBody)
+  columnDiv.appendChild(cardDiv)
+  postItem.appendChild(columnDiv)
+
+
+  postsContainer.appendChild(postItem)
+})
+
 channel.join()
   .receive("ok", resp => { console.log("Joined successfully", resp) })
   .receive("error", resp => { console.log("Unable to join", resp) })
