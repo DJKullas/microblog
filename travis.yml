@@ -6,5 +6,5 @@ elixir:
 otp_release:
   - 20.1
 before_script:
-- psql -U postgres -c "CREATE USER microblog WITH CREATEUSER PASSWORD 'microblog';"
+- psql -U postgres -c "CREATE USER microblog WITH PASSWORD 'IXu5ze2oof';"
 - psql -U postgres -c "CREATE DATABASE microblog_test;"
