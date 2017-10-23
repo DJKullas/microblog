@@ -14,10 +14,10 @@ defmodule Microblog.Blog.User do
     field :email, :string
     field :password, :string, virtual: true
     field :bio, :string
-    has_many :followers, Microblog.Blog.Follower
-    has_many :following, Microblog.Blog.Following
-    has_many :posts, Microblog.Blog.Post
-    has_many :likes, Microblog.Blog.Like
+    has_many :followers, Microblog.Blog.Follower, on_delete: :delete_all
+    has_many :following, Microblog.Blog.Following, on_delete: :delete_all
+    has_many :posts, Microblog.Blog.Post, on_delete: :delete_all
+    has_many :likes, Microblog.Blog.Like, on_delete: :delete_all
 
     field :password_hash, :string
     field :pw_tries, :integer
