@@ -4,34 +4,39 @@
 <h2>Posts</h2>
   <div id="posts">
     </div>
-  <%= if @logged_in do %>
-  <%= for user <- @users do %>
-      <%= for follower <- user.followers do %>
-      <%= if follower.email_me == @current_user.email do %>
-      <%= for post <- @posts do %>
-      <%= if post.user.email == follower.email_owner do %>
+    <%= if @logged_in do %>
+    <div class="row">
+      <div class="col-md-5">
+    <%= render "form.html", Map.put(assigns, :action, post_path(@conn, :create)) %>
+  </div>
+</div>
+    <%= for user <- @users do %>
+        <%= for follower <- user.followers do %>
+        <%= if follower.email_me == @current_user.email do %>
+        <%= for post <- @posts do %>
+        <%= if post.user.email == follower.email_owner do %>
 
-      <div class="row">
-      <div class="col-md-8">
+        <div class="row">
+        <div class="col-md-8">
 
-        <div class="card" style="width: 24rem;">
-          <div class="card-body">
-            <h4 class="card-title"><%= post.user.name %></h4>
-            <p class="card-text">@<%= post.user.handle %></p>
-            <p class="card-text"><%= post.message %></p>
-              </div>
-          <span><%= link "Show", to: post_path(@conn, :show, post), class: "btn btn-default btn-xs" %></span>
-        </div>
-        </div>
-        </div>
+          <div class="card" style="width: 24rem;">
+            <div class="card-body">
+              <h4 class="card-title"><%= post.user.name %></h4>
+              <p class="card-text">@<%= post.user.handle %></p>
+              <p class="card-text"><%= post.message %></p>
+                </div>
+            <span><%= link "Show", to: post_path(@conn, :show, post), class: "btn btn-default btn-xs" %></span>
+          </div>
+          </div>
+          </div>
 
 
 
-    <% end %>
-    <% end %>
-    <% end %>
-<% end %>
-<% end %>
+      <% end %>
+      <% end %>
+      <% end %>
+  <% end %>
+  <% end %>
 <% else %>
 <%= for post <- @posts do %>
 <div class="row">

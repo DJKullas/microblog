@@ -26869,7 +26869,7 @@ var socket = new _phoenix.Socket("/socket", { params: { token: window.userToken 
 socket.connect();
 
 // Now that you are connected, you can join channels with a topic:
-var channel = socket.channel("updates:all", {});
+var channel = socket.channel("updates:all", {}); // WOrk
 
 var postInput = document.querySelector("#post-input");
 var postsContainer = document.querySelector("#posts");

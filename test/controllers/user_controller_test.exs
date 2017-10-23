@@ -1,5 +1,5 @@
 defmodule Microblog.UserControllerTest do
-  use Microblog.ConnCase
+  use MicroblogWeb.ConnCase
 
   alias Microblog.User
   @valid_attrs %{email: "some email", followers: [], following: [], handle: "some handle", name: "some name", password: "some password"}

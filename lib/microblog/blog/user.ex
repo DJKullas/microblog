@@ -9,12 +9,18 @@ defmodule Microblog.Blog.User do
     field :name, :string
     field :handle, :string
     field :email, :string
-    field :password, :string
+    field :password, :string, virtual: true
     field :bio, :string
     has_many :followers, Microblog.Blog.Follower
     has_many :following, Microblog.Blog.Following
     has_many :posts, Microblog.Blog.Post
     has_many :likes, Microblog.Blog.Like
+
+    field :password_hash, :string
+    field :pw_tries, :integer
+    field :pw_last_try, :utc_datetime
+
+    field :password_confirmation, :string, virtual: true
 
 
 
@@ -24,7 +30,32 @@ defmodule Microblog.Blog.User do
   @doc false
   def changeset(%User{} = user, attrs) do
     user
-    |> cast(attrs, [:name, :handle, :email, :password, :bio])
-    |> validate_required([:name, :handle, :email, :password])
+    |> cast(attrs, [:name, :handle, :email, :password, :bio, :password_confirmation])
+    |> validate_confirmation(:password)
+    |> validate_password(:password)
+    |> put_pass_hash()
+    |> validate_required([:name, :handle, :email, :password_hash])
   end
+
+  # Password validation
+    # From Comeonin docs
+    def validate_password(changeset, field, options \\ []) do
+      validate_change(changeset, field, fn _, password ->
+        case valid_password?(password) do
+          {:ok, _} -> []
+          {:error, msg} -> [{field, options[:message] || msg}]
+        end
+      end)
+    end
+
+    def put_pass_hash(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset) do
+      change(changeset, Comeonin.Argon2.add_hash(password))
+    end
+    def put_pass_hash(changeset), do: changeset
+
+    def valid_password?(password) when byte_size(password) > 7 do
+      {:ok, password}
+    end
+    def valid_password?(_), do: {:error, "The password is too short"}
+
 end

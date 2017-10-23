@@ -2,6 +2,7 @@ defmodule MicroblogWeb.PostController do
   use MicroblogWeb, :controller
 
   import Plug.Conn
+  import Logger
   alias Microblog.Blog
   alias Microblog.Blog.Post
 
@@ -22,7 +23,27 @@ defmodule MicroblogWeb.PostController do
     followers = Microblog.Repo.preload followers, :user
     users = Microblog.Repo.all(Blog.User)
     users = Microblog.Repo.preload(users, :followers)
-    render(conn, "index.html", changeset: changeset, user: user, logged_in: logged_in, users: users, posts: posts)
+    users = Microblog.Repo.preload(users, :posts)
+
+    posts_to_show = []
+
+    for user <- users do
+        for follower <- user.followers do
+        if follower.email_me == user.email do
+        for post <- posts do
+        if post.user.email == follower.email_owner do
+          post = Microblog.Repo.preload(post, :user)
+          post = Microblog.Repo.preload(post, :likes)
+          posts_to_show = [post | posts_to_show]
+        end
+      end
+    end
+  end
+end
+
+
+
+    render(conn, "index.html", changeset: changeset, logged_in: logged_in, users: users, posts: posts)
      else
      logged_in = nil
      posts = Blog.list_posts()

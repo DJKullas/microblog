@@ -10,15 +10,16 @@ defmodule MicroblogWeb.UserController do
   end
 
   def new(conn, _params) do
+    logged_in = get_session(conn, :user_id)
     changeset = Blog.change_user(%User{})
-    render(conn, "new.html", changeset: changeset)
+    render(conn, "new.html", changeset: changeset, logged_in: logged_in)
   end
 
   def create(conn, %{"user" => user_params}) do
     case Blog.create_user(user_params) do
       {:ok, user} ->
         conn
-        |> put_flash(:info, "User created successfully.")
+        |> put_flash(:info, "User created successfully. Log in at top right.")
         |> redirect(to: user_path(conn, :show, user))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
