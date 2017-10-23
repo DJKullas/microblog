@@ -26728,7 +26728,13 @@ var _socket2 = _interopRequireDefault(_socket);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// Brunch automatically concatenates all files in your
+// Import local files
+//
+// Local files can be imported directly using relative
+// paths "./socket" or full ones "web/static/js/socket".
+
+
+var handlebars = require("handlebars"); // Brunch automatically concatenates all files in your
 // watched paths. Those paths can be configured at
 // config.paths.watched in "brunch-config.js".
 //
@@ -26741,14 +26747,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 // If you no longer want to use a dependency, remember
 // to also remove its path from "config.paths.watched".
-var handlebars = require("handlebars");
 
-// Import local files
-//
-// Local files can be imported directly using relative
-// paths "./socket" or full ones "web/static/js/socket".
 
 $(function () {
+
+  console.log("test we get here");
 
   if (!$("#likes-template").length > 0) {
     // Wrong page.

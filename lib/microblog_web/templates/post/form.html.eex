@@ -5,8 +5,10 @@
       <p>Oops, something went wrong! Please check the errors below.</p>
     </div>
   <% end %>
-<div id="current-user-name"><%= @current_user.name %></div>
-<div id="current-user-handle"><%= @current_user.handle %></div>
+  <%= if @current_user do %>
+<div style="display: none;" id="current-user-name"><%= @current_user.name %></div>
+<div style="display: none;" id="current-user-handle"><%= @current_user.handle %></div>
+<% end %>
   <div class="form-group">
     <%= label f, :message, class: "control-label" %>
     <%= textarea f, :message, class: "form-control", id: "messageText" %>
@@ -17,6 +19,7 @@
     <%= submit "Submit", class: "btn btn-primary" %>
   </div>
 
+<%= if @current_user do %>
   <%= hidden_input :post, :user_id, value: @current_user.id %>
-
+<% end %>
 <% end %>

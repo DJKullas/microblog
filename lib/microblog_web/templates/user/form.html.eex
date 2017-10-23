@@ -44,9 +44,9 @@
   </div>
 
   <div class="form-group">
-    <%= label f, :photo, class: "control-label" %>
-    <%= file_input f, :photo, class: "form-control" %>
-    <%= error_tag f, :photo %>
+    <%= label f, :admin, class: "control-label" %>
+    <%= checkbox f, :admin, class: "form-control" %>
+    <%= error_tag f, :admin %>
   </div>
 
   <div class="form-group">

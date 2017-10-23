@@ -26,6 +26,7 @@ defmodule MicroblogWeb.Router do
     post "/sessions", SessionController, :login
     delete "/sessions", SessionController, :logout
     get "/", UserController, :new
+    resources "/tags", TagController
   end
 
   # Other scopes may use custom stacks.

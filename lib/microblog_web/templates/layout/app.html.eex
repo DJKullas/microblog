@@ -11,6 +11,8 @@ LOGIN FORM BY PROFESSOR NAT TUCKs -->
     <meta name="author" content="">
 
     <title>Hello Microblog!</title>
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
@@ -23,7 +25,7 @@ LOGIN FORM BY PROFESSOR NAT TUCKs -->
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a href="/posts" class="nav-link">Home</a>
+              <a href="/posts" class="nav-link">Feed</a>
             </li>
             <li class="nav-item">
               <a href="/following" class="nav-link">Following</a>
@@ -37,6 +39,9 @@ LOGIN FORM BY PROFESSOR NAT TUCKs -->
             <li class="nav-item">
               <a href="/users" class="nav-link">Users</a>
             </li>
+            <li class="nav-item">
+              <a href="/tags/new" class="nav-link">Search Tag</a>
+            </li>
             <%= if @current_user do %>
             <li class="nav-item">
             <a href="/users/<%= @current_user.id %>" class="nav-link">Profile</a>
@@ -44,9 +49,6 @@ LOGIN FORM BY PROFESSOR NAT TUCKs -->
             <% end %>
           </ul>
         </div>
-        <form class="form-inline">
-          <input class="form-control mr-md-2" type="text" placeholder="Search">
-        </form>
 
         <%= if @current_user do %>
          <span class="text-light">

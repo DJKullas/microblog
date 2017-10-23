@@ -1,3 +1,6 @@
+# PASSWORD CODE NOT MINE
+# PASSWORD CODE FROM NAT TUCK
+
 defmodule Microblog.Blog.User do
   use Ecto.Schema
   import Ecto.Changeset
@@ -21,6 +24,7 @@ defmodule Microblog.Blog.User do
     field :pw_last_try, :utc_datetime
 
     field :password_confirmation, :string, virtual: true
+    field :admin, :boolean
 
 
 
@@ -30,7 +34,7 @@ defmodule Microblog.Blog.User do
   @doc false
   def changeset(%User{} = user, attrs) do
     user
-    |> cast(attrs, [:name, :handle, :email, :password, :bio, :password_confirmation])
+    |> cast(attrs, [:name, :handle, :email, :password, :bio, :password_confirmation, :admin])
     |> validate_confirmation(:password)
     |> validate_password(:password)
     |> put_pass_hash()

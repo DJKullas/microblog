@@ -25,30 +25,11 @@ defmodule MicroblogWeb.PostController do
     users = Microblog.Repo.preload(users, :followers)
     users = Microblog.Repo.preload(users, :posts)
 
-    posts_to_show = []
-
-    for user <- users do
-        for follower <- user.followers do
-        if follower.email_me == user.email do
-        for post <- posts do
-        if post.user.email == follower.email_owner do
-          post = Microblog.Repo.preload(post, :user)
-          post = Microblog.Repo.preload(post, :likes)
-          posts_to_show = [post | posts_to_show]
-        end
-      end
-    end
-  end
-end
-
-
-
     render(conn, "index.html", changeset: changeset, logged_in: logged_in, users: users, posts: posts)
      else
      logged_in = nil
      posts = Blog.list_posts()
      posts = Microblog.Repo.preload(posts, :user)
-    conn
     render(conn, "index.html", changeset: changeset, logged_in: logged_in, posts: posts)
       end
   end

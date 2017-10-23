@@ -1,0 +1,6 @@
+<div class="container">
+<h2>Search Tag</h2>
+
+<%= render "form.html", Map.put(assigns, :action, tag_path(@conn, :create)) %>
+
+</div>

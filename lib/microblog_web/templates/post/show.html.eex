@@ -1,4 +1,8 @@
 <div class="container">
+  <div id="post-input">
+  </div>
+  <div id="posts">
+  </div>
   <div class="row">
     <div class="col-md-4">
       <h2><%= @user.name %></h2>
@@ -35,8 +39,9 @@
 
 
 
-          <%= if @user.handle == @current_user.handle do %>
-          <span><%= link "Edit", to: post_path(@conn, :edit, @post), class: "btn btn-primary" %></span>
+          <%= if @user.handle == @current_user.handle or @current_user.admin do %>
+          <span><%= link "Edit", to: post_path(@conn, :edit, @post), class: "btn btn-secondary" %></span>
+          <span><%= link "Delete", to: post_path(@conn, :delete, @post), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger" %></span>
           <% end %>
         </div>
       </div>

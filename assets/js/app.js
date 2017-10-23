@@ -18,12 +18,13 @@ import "phoenix_html";
 // Local files can be imported directly using relative
 // paths "./socket" or full ones "web/static/js/socket".
 
-import socket from "./socket"
 
 
 let handlebars = require("handlebars");
 
 $(function() {
+
+  console.log("test we get here");
 
   if (!$("#likes-template").length > 0) {
     // Wrong page.
@@ -81,3 +82,6 @@ $(function() {
 
     fetch_likes();
 });
+
+
+import socket from "./socket"
